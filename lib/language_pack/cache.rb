@@ -8,6 +8,10 @@ class LanguagePack::Cache
     @cache_base = Pathname.new(cache_path)
   end
 
+  def cache_custom_path(path)
+    (@cache_base + path)
+  end
+
   # removes the the specified path from the cache
   # @param [String] relative path from the cache_base
   def clear(path)

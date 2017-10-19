@@ -77,7 +77,25 @@ WARNING
         precompile = rake.task("assets:precompile")
         return true unless precompile.is_defined?
 
-        topic("Preparing app for Rails asset pipeline")
+        topic("Preparing app for Rails asset pipeline TEST")
+
+
+        if Dir.glob("#{@cache.cache_custom_path(public_assets_folder)}/{.sprockets-manifest-*.json,manifest-*.json}", File::FNM_DOTMATCH).any?
+          File.open(Dir.glob("#{@cache.cache_custom_path(public_assets_folder)}/{.sprockets-manifest-*.json,manifest-*.json}", File::FNM_DOTMATCH).first)
+              .each_line { |line| puts line }
+        end
+
+        puts "checking public: #{File.expand_path(public_assets_folder)}\n"
+        puts "public assets folder: #{Dir.entries(File.expand_path(public_assets_folder))}\n" if File.exist?(File.expand_path(public_assets_folder))
+
+        puts "checking default: #{File.expand_path(default_assets_cache)}\n"
+        puts "default assets folder: #{Dir.entries(File.expand_path(default_assets_cache))}\n" if File.exist?(File.expand_path(default_assets_cache))
+
+        puts "checking cache public: #{@cache.cache_custom_path(public_assets_folder)}\n"
+        puts "cached public assets folder: #{Dir.entries(@cache.cache_custom_path(public_assets_folder))}\n" if File.exist?(@cache.cache_custom_path(public_assets_folder))
+
+        puts "checking cache default: #{@cache.cache_custom_path(default_assets_cache)}\n"
+        puts "cached default assets folder: #{Dir.entries(@cache.cache_custom_path(default_assets_cache))}\n" if File.exist?(@cache.cache_custom_path(default_assets_cache))
 
         @cache.load_without_overwrite public_assets_folder
         @cache.load default_assets_cache
